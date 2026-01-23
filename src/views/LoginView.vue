@@ -43,7 +43,7 @@ const sendForm = async () => {
       <form @submit.prevent="sendForm()" novalidate>
         <div class="mb-3">
           <label>Email</label>
-          <input type="email" v-model="form.data.email" class="form-control" :class="{'is-invalid': form.errors?.name}">
+          <input type="email" v-model="form.data.email" class="form-control" :class="{'is-invalid': form.errors?.email}">
           <InvalidFeedback :errors="form.errors?.email"/>
         </div>
         <div class="mb-3">
