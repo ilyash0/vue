@@ -17,6 +17,11 @@ const updateProducts = async () => {
   products.value = result.data
 }
 
+const deleteAds = async (id) => {
+  await apiFetch('delete', `/proucts/${id}`, null, token.value)
+  await updateProducts()
+}
+
 onMounted(async () => {
   await updateProducts()
   isLoaded.value = true
@@ -35,8 +40,8 @@ onMounted(async () => {
             <p class="card-text">{{ product.description }}</p>
             <p class="fw-bold">Цена: {{ product.price }} ₽</p>
             <div class="d-flex justify-content-between">
-              <RouterLink to="/edit-ad" class="btn btn-outline-primary btn-sm">Редактировать</RouterLink>
-              <button class="btn btn-outline-danger btn-sm">Удалить</button>
+              <RouterLink :to="`/edit/${product.id}`" class="btn btn-outline-primary btn-sm">Редактировать</RouterLink>
+              <button @click.prevent="deleteAds(product.id)" class="btn btn-outline-danger btn-sm">Удалить</button>
             </div>
           </div>
         </div>
