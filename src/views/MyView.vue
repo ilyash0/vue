@@ -18,7 +18,7 @@ const updateProducts = async () => {
 }
 
 const deleteAds = async (id) => {
-  await apiFetch('delete', `/proucts/${id}`, null, token.value)
+  await apiFetch('delete', `/products/${id}`, null, token.value)
   await updateProducts()
 }
 
