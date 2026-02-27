@@ -11,6 +11,7 @@ export default {
 import {ref} from "vue";
 import apiFetch from "@/helpers/apiFetch";
 import InvalidFeedback from "@/components/InvalidFeedback.vue";
+import router from "@/router/index.js";
 
 const form = ref({
   data: {
@@ -31,6 +32,9 @@ const sendForm = async () => {
   const result = await apiFetch('post', '/registration', form.value.data)
   if (result.errors) {
     form.value.errors = result.errors
+  }
+  else {
+    await router.push('/login')
   }
   form.value.isSending = false
 }

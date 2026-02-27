@@ -8,29 +8,35 @@ export default {
 </script>
 
 <script setup>
-import {ref} from "vue";
-import apiFetch from "@/helpers/apiFetch";
+import {inject, ref} from 'vue';
+import apiFetch from "@/helpers/apiFetch.js";
 import InvalidFeedback from "@/components/InvalidFeedback.vue";
+import {useRouter} from "vue-router";
 
+const router = useRouter()
 const form = ref({
-  data: {
-    name: '',
-    email: '',
-    password: '',
+  data:{
+    email:'',
+    password:'',
   },
-  errors: {},
+  errors:{},
   isSending: false,
 })
 
-const sendForm = async () => {
+const updateToken = inject('updateToken')
+
+const sendForm = async () =>{
   if (form.value.isSending) return;
   form.value.errors = {}
 
-  form.value.isSending = true;
+  form.value.isSending = true
 
   const result = await apiFetch('post', '/authorization', form.value.data)
   if (result.errors) {
     form.value.errors = result.errors
+  } else {
+    updateToken(result.token)
+    await router.push('/')
   }
   form.value.isSending = false
 }
